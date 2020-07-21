@@ -2,7 +2,7 @@ from helper import *
 from pprint import pprint
 
 def clean_tsv():
-    data = ret_tsv("data.tsv")
+    data = ret_tsv("data/data.tsv")
     ids = []
     for row in data:
         if row[1] != 'tvEpisode':
@@ -10,7 +10,7 @@ def clean_tsv():
     write_json(ids, "smol_data.json")
 
 def get_imdb_info_1():
-    data = ret_json("smol_data.json")
+    data = ret_json("data/smol_data.json")
     links = []
     for row in data:
         links.append(f"https://www.imdb.com/title/{row[0]}/")
