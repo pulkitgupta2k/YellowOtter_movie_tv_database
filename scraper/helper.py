@@ -19,7 +19,12 @@ def ret_json(file):
         data = json.load(f)
     return data
 
-
+def append_json(file, data):
+    with open(file) as f:
+        json_data = json.load(f)
+    json_data.extend(data)
+    with open(file, "w") as f:
+        json.dump(json_data, f)
 #HTML
 def getSoup_list(urls):
     MAX_CONNECTIONS = 100

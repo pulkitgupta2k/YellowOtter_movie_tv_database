@@ -16,8 +16,11 @@ def get_imdb_info_1():
         links.append(f"https://www.imdb.com/title/{row[0]}/")
     for i in range(0, len(links), 300):
         pages = getSoup_list(links[i : i+300])
+        script_data = []
         for page in pages:
-            script_data = get_page_data_1(page)
+            script_data.append(get_page_data_1(page))
+        append_json("data/final_data.json", script_data)
+        break #temp
 
 def get_page_data_1(soup):
     data = json.loads(soup.find("script", {"type": "application/ld+json"}).text)
@@ -25,7 +28,7 @@ def get_page_data_1(soup):
     t_id = data['url'][7:-1]
     name = data['name']
     try:
-        desc = soup.find("div", {"class": "plot_summary"}).text
+        desc = soup.find("div", {"class": "plot_summary"}).text.strip()
     except:
         desc = ""
     try:
@@ -56,7 +59,7 @@ def get_page_data_1(soup):
     epidode = []
 
     ret_data = [t_id, name, desc, genre, IMDB_rating, Rotten_rating, age_rating, cover_image, air_date, trailer_link, cast, tv_season, epidode]
-    pprint(ret_data)
+    # pprint(ret_data)
     return ret_data
 
 def driver():
