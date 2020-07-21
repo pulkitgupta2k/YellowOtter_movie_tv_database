@@ -3,22 +3,31 @@
         "id",
         "Name",
         "Description",
-        "Genre",
+        [
+            "Genre"
+        ],
         "IMDB ratings",
         "Rottentomatoes ratings",
         "Age Rating",
+        "cover image",
+        "Air date",
+        "Trailer link",
         [
-            "Cast name",
-            "Real name",
-            "cast/dir/writer",
-            "Pic",
-            "cover image",
-            "Air date",
-            "Trailer link",
+            [
+                "Cast name",
+                "Real name",
+                "cast/dir/writer",
+                "Pic"
+            ]
+        ],
+        [
             [
                 "tv season",
-                "season date"
-            ],
+                "season date",
+                "season trailer"
+            ]
+        ],
+        [
             [
                 "Episode ID",
                 "episode name",
