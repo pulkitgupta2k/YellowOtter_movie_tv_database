@@ -22,7 +22,7 @@ def ret_json(file):
 def append_json(file, data):
     with open(file) as f:
         json_data = json.load(f)
-    json_data.extend(data)
+    json_data.update(data)
     with open(file, "w") as f:
         json.dump(json_data, f)
 #HTML

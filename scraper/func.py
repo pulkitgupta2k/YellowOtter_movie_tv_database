@@ -1,6 +1,8 @@
 from helper import *
 from pprint import pprint
 
+RANGE_OF_SOUP = 100
+
 def clean_tsv():
     data = ret_tsv("data/data.tsv")
     ids = []
@@ -14,11 +16,11 @@ def get_imdb_info_1():
     links = []
     for row in data:
         links.append(f"https://www.imdb.com/title/{row[0]}/")
-    for i in range(0, len(links), 300):
-        pages = getSoup_list(links[i : i+300])
-        script_data = []
+    for i in range(0, len(links), RANGE_OF_SOUP):
+        pages = getSoup_list(links[i : i+ RANGE_OF_SOUP])
+        script_data = {}
         for page in pages:
-            script_data.append(get_page_data_1(page))
+            script_data.update(get_page_data_1(page))
         append_json("data/final_data.json", script_data)
         break #temp
 
@@ -28,7 +30,7 @@ def get_page_data_1(soup):
     t_id = data['url'][7:-1]
     name = data['name']
     try:
-        desc = soup.find("div", {"class": "plot_summary"}).text.strip()
+        desc = soup.find("div", {"class": "plot_summary"}).text.strip().split("\n")[0]
     except:
         desc = ""
     try:
@@ -52,15 +54,36 @@ def get_page_data_1(soup):
         air_date = data['datePublished']
     except:
         air_date = ""
-    trailer_link = "#"
+    try:
+        trailer_link = data['trailer']['embedUrl']
+    except:
+        trailer_link = "#"
 
     cast = []
     tv_season = []
     epidode = []
-
-    ret_data = [t_id, name, desc, genre, IMDB_rating, Rotten_rating, age_rating, cover_image, air_date, trailer_link, cast, tv_season, epidode]
+    ret_data = {}
+    ret_data[t_id] = [t_id, name, desc, genre, IMDB_rating, Rotten_rating, age_rating, cover_image, air_date, trailer_link, cast, tv_season, epidode]
     # pprint(ret_data)
     return ret_data
+
+def get_page_info_2():
+    data = ret_json("data/final_data.json")
+    links = []
+    for t_id in data.keys():
+        links.append(f"https://www.imdb.com/title/{t_id}/fullcredits")
+    for i in range(0, len(links),  RANGE_OF_SOUP):
+        pages = getSoup_list(links[i : i+RANGE_OF_SOUP])
+        script_data = {}
+        for page in pages:
+            t_id_data = get_page_data_2(page)
+            script_data[ t_id_data[0] ] [10]= t_id_data[1]
+        append_json("data/final_data.json", script_data)
+        break #temp
+
+def get_page_data_2(soup):
+    fullcredits_content = soup.find("div", {"id": "fullcredits_content"})
+
 
 def driver():
     # clean_tsv()
