@@ -38,9 +38,12 @@ def getSoup_list(urls):
         print(response)
     soups = []
     for request in requests:
-        html = request.content
-        soup = BeautifulSoup(html, "html.parser")
-        soups.append(soup)
+        try:
+            html = request.content
+            soup = BeautifulSoup(html, "html.parser")
+            soups.append(soup)
+        except:
+            pass
     return soups
 
 def getSoup(link):
