@@ -22,11 +22,10 @@ def get_imdb_info_1():
         for page in pages:
             script_data.update(get_page_data_1(page))
         append_json("data/final_data.json", script_data)
-        break #temp
 
 def get_page_data_1(soup):
-    data = json.loads(soup.find("script", {"type": "application/ld+json"}).text)
-
+    data = soup.find("script", {"type": "application/ld+json"})
+    data = json.loads(data.contents[0])
     t_id = data['url'][7:-1]
     name = data['name']
     try:
