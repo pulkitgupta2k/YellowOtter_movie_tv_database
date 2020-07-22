@@ -1,15 +1,15 @@
-import React from 'react';
+/** @format */
 
-import {Switch, Route} from 'react-router-dom';
-
-import Home from './pages/Home';
-
+import React from "react"
+import { HashRouter as Router } from "react-router-dom"
+import Routes from "./routes"
+import history from "./services/history"
 function App() {
-  return (
-    <Switch>
-      <Route exact path="/" component={Home}/>
-    </Switch>
-  );
+	return (
+		<Router history={history}>
+			<Routes />
+		</Router>
+	)
 }
 
-export default App;
+export default App
