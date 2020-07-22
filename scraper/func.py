@@ -82,9 +82,52 @@ def get_page_info_2():
 
 def get_page_data_2(soup):
     fullcredits_content = soup.find("div", {"id": "fullcredits_content"})
+    headings_soup = fullcredits_content.findAll("h4")
+    table_soup = fullcredits_content.findAll("table")
+
+    t_id = soup.find("link", {"rel": "canonical"})["href"].split("/")[-2]
+    cast = []
+    for index, heading in enumerate(headings_soup):
+        heading_text = heading.text.lower()
+        if "directed" in heading_text:
+            table = table_soup[index]
+            trs = table.findAll("tr")
+            for tr in trs[:5]:
+                cast_name = ""
+                real_name = tr.find("td", {"class":"name"}).text.strip()
+                cast_type = "dir"
+                pic = ""
+                cast.append([cast_name, real_name, cast_type, pic])
+        elif "writer" in heading_text or "writing" in heading_text:
+            table = table_soup[index]
+            trs = table.findAll("tr")
+            for tr in trs[:5]:
+                cast_name = ""
+                real_name = tr.find("td", {"class":"name"}).text.strip()
+                cast_type = "writer"
+                pic = ""
+                cast.append([cast_name, real_name, cast_type, pic])
+        elif "cast" in heading_text:
+            table = table_soup[index]
+            trs = table.findAll("tr")[1:]
+            for tr in trs[:200:2]:
+                try:
+                    td = tr.findAll("td")
+                    pic = td[0].find("img")['src']
+                    cast_name = td[1].text.strip()
+                    real_name = td[3].text.strip().replace("&nbsp", "").split()[0]
+                    cast_type = "cast"
+                    cast.append([cast_name, real_name, cast_type, pic])
+                except:
+                    pass
+    pprint([ t_id, cast])
+    print(len(cast))
+    return [ t_id, cast]
+
 
 
 def driver():
     # clean_tsv()
-    get_imdb_info_1()
+    # get_imdb_info_1()
     # get_page_data_1(getSoup("https://www.imdb.com/title/tt0000002/"))
+    get_page_data_2(getSoup("https://www.imdb.com/title/tt0000001/fullcredits"))
