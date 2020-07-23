@@ -32,9 +32,7 @@
                 "episode name",
                 "episode number",
                 "episode rating",
-                "episode date",
-                "episode length",
-                "air date"
+                "episode date"
             ]
         ]
     ]

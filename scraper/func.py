@@ -159,13 +159,57 @@ def get_page_data_3(soup):
     ret = []
     for i, season in enumerate(seasons):
         ret.append([season, years[i]])
-
+    print(ret)
     return [t_id, ret]
 
 
+def get_page_info_4():
+    data = ret_json("data/final_data.json")
+    links = []
+    for t_id_k, t_id_v in data.items():
+        if t_id_v[11]:
+            for s_no in t_id_v[11]:
+                links.append(f"https://www.imdb.com/title/{t_id_k}/episodes/season={s_no}")
+    for i in range(0, len(links),  RANGE_OF_SOUP):
+        pages = getSoup_list(links[i : i+RANGE_OF_SOUP])
+        script_data = {}
+        for page in pages:
+            t_id_data = get_page_data_4(page)
+            if t_id_data[1] not in script_data[ t_id_data[0] ][12]:
+                script_data[ t_id_data[0] ][12].append(t_id_data[1])
+        append_json("data/final_data.json", script_data)
+
+
+def get_page_data_4(soup):
+    t_id = soup.find("link", {"rel": "canonical"})["href"].split("/")[-2]
+    eps = soup.find("div", {"class": "list detail eplist"})
+    eps = eps.findAll("div", {"class": "list_item"})
+    ret = []
+
+    s = soup.find("select", {"id": "bySeason"}).find("option", {"selected": "selected"}).text.strip()
+    print(s)
+
+    for ep in eps:
+        ep_id = ep.find("a", {"itemprop": "name"})['href'].split("/")[-2]
+        ep_no = s+"_"+ep.find("meta", {"itemprop": "episodeNumber"})['content']
+        ep_name = ep.find("strong").text.strip()
+        air_date = ep.find("div", {"class": "airdate"}).text.strip()
+        try:
+            ep_rating = ep.find("span", {"class": "ipl-rating-star__rating"}).text
+        except:
+            ep_rating = ""
+        try:
+            ep_image = ep.find("img")['src']
+        except:
+            ep_rating = ""
+        ret.append([ep_id, ep_no, ep_name, air_date, ep_rating, ep_image])
+    pprint([t_id, ret])
+    return [t_id, ret]
+
 def driver():
     # clean_tsv()
-    get_imdb_info_1()
+    # get_imdb_info_1()
     # get_page_data_1(getSoup("https://www.imdb.com/title/tt0000002/"))
     # get_page_data_3(getSoup("https://www.imdb.com/title/tt0000001/fullcredits"))
     # get_page_data_3(getSoup("https://www.imdb.com/title/tt4574334/episodes"))
+    get_page_data_4(getSoup("https://www.imdb.com/title/tt4574334/episodes?season=4"))
