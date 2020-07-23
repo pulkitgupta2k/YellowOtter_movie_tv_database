@@ -1,3 +1,14 @@
 https://www.imdb.com/title/tt4574334
 https://www.imdb.com/title/tt4574334/fullcredits
 https://www.imdb.com/title/tt4574334/episodes?season=2
+
+
+short
+movie
+tvMovie
+tvSeries - episodes
+tvShort 
+tvMiniSeries - episodes
+tvSpecial
+video
+videoGame

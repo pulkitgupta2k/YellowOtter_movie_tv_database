@@ -73,12 +73,12 @@ def get_page_info_2():
         links.append(f"https://www.imdb.com/title/{t_id}/fullcredits")
     for i in range(0, len(links),  RANGE_OF_SOUP):
         pages = getSoup_list(links[i : i+RANGE_OF_SOUP])
-        script_data = {}
+        script_data =  {}
         for page in pages:
             t_id_data = get_page_data_2(page)
             script_data[ t_id_data[0] ] [10]= t_id_data[1]
         append_json("data/final_data.json", script_data)
-        break #temp
+
 
 def get_page_data_2(soup):
     fullcredits_content = soup.find("div", {"id": "fullcredits_content"})
@@ -124,10 +124,45 @@ def get_page_data_2(soup):
     print(len(cast))
     return [ t_id, cast]
 
+def get_page_info_3():
+    data = ret_json("data/final_data.json")
+    links = []
+    for t_id_k, t_id_v in data.items():
+        if t_id_v[13] == "tvSeries" or t_id_v[13] == "tvMiniSeries":
+            links.append(f"https://www.imdb.com/title/{t_id_k}/episodes")
+    for i in range(0, len(links),  RANGE_OF_SOUP):
+        pages = getSoup_list(links[i : i+RANGE_OF_SOUP])
+        script_data = {}
+        for page in pages:
+            t_id_data = get_page_data_2(page)
+            script_data[ t_id_data[0] ] [11]= t_id_data[1]
+        append_json("data/final_data.json", script_data)
+
+def get_page_data_3(soup):
+    t_id = soup.find("link", {"rel": "canonical"})["href"].split("/")[-2]
+    season_soup = soup.find("select", {"id": "bySeason"}).findAll("option")
+    seasons = []
+    for s_s in season_soup:
+        seasons.append(s_s['value'])
+    
+    year_soup = soup.find("select", {"id": "byYear"}).findAll("option")[1:]
+    years = []
+    for y_s in year_soup:
+        years.append(y_s['value'])
+
+    if len(seasons) > len(years):
+        years = years + [years[-1]] * (len(seasons) - len(years))
+    
+    ret = []
+    for i, season in enumerate(seasons):
+        ret.append([season, years[i]])
+
+    return [t_id, ret]
 
 
 def driver():
     # clean_tsv()
     # get_imdb_info_1()
     # get_page_data_1(getSoup("https://www.imdb.com/title/tt0000002/"))
-    get_page_data_2(getSoup("https://www.imdb.com/title/tt0000001/fullcredits"))
+    # get_page_data_3(getSoup("https://www.imdb.com/title/tt0000001/fullcredits"))
+    get_page_data_3(getSoup("https://www.imdb.com/title/tt4574334/episodes"))
