@@ -1,7 +1,7 @@
 from helper import *
 from pprint import pprint
 
-RANGE_OF_SOUP = 100
+RANGE_OF_SOUP = 600
 
 def clean_tsv():
     data = ret_tsv("data/data.tsv")
@@ -20,7 +20,10 @@ def get_imdb_info_1():
         pages = getSoup_list(links[i : i+ RANGE_OF_SOUP])
         script_data = {}
         for page in pages:
-            script_data.update(get_page_data_1(page))
+            try:
+                script_data.update(get_page_data_1(page))
+            except:
+                pass
         append_json("data/final_data.json", script_data)
 
 def get_page_data_1(soup):
@@ -162,7 +165,7 @@ def get_page_data_3(soup):
 
 def driver():
     # clean_tsv()
-    # get_imdb_info_1()
+    get_imdb_info_1()
     # get_page_data_1(getSoup("https://www.imdb.com/title/tt0000002/"))
     # get_page_data_3(getSoup("https://www.imdb.com/title/tt0000001/fullcredits"))
-    get_page_data_3(getSoup("https://www.imdb.com/title/tt4574334/episodes"))
+    # get_page_data_3(getSoup("https://www.imdb.com/title/tt4574334/episodes"))
