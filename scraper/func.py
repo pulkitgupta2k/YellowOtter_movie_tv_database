@@ -84,8 +84,8 @@ def get_page_info_2():
                 pass
         if i % (10*RANGE_OF_SOUP) == 0:
             print(i)
-            write_json("data/final_data_new.json", data)
-    write_json("data/final_data_new.json", data)
+            write_json(data, "data/final_data_new.json")
+    write_json(data, "data/final_data_new.json")
 
 
 def get_page_data_2(soup):
