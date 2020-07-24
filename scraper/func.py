@@ -70,17 +70,22 @@ def get_page_data_1(soup):
     return ret_data
 
 def get_page_info_2():
-    data = ret_json("data/final_data.json")
+    data = ret_json("data/final_data_0.json")
     links = []
     for t_id in data.keys():
         links.append(f"https://www.imdb.com/title/{t_id}/fullcredits")
     for i in range(0, len(links),  RANGE_OF_SOUP):
         pages = getSoup_list(links[i : i+RANGE_OF_SOUP])
-        script_data =  {}
         for page in pages:
-            t_id_data = get_page_data_2(page)
-            script_data[ t_id_data[0] ] [10]= t_id_data[1]
-        append_json("data/final_data.json", script_data)
+            try:
+                t_id_data = get_page_data_2(page)
+                data[ t_id_data[0] ] [10]= t_id_data[1]
+            except:
+                pass
+        if i % (10*RANGE_OF_SOUP) == 0:
+            print(i)
+            write_json("data/final_data_new.json", data)
+    write_json("data/final_data_new.json", data)
 
 
 def get_page_data_2(soup):
@@ -123,8 +128,6 @@ def get_page_data_2(soup):
                     cast.append([cast_name, real_name, cast_type, pic])
                 except:
                     pass
-    pprint([ t_id, cast])
-    print(len(cast))
     return [ t_id, cast]
 
 def get_page_info_3():
