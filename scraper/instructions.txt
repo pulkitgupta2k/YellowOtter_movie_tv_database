@@ -12,3 +12,111 @@ tvMiniSeries - episodes
 tvSpecial
 video
 videoGame
+documentary
+animation
+tvSeries
+
+
+3: https://gofile.io/d/OTbFtc 
+2: https://gofile.io/d/QxvN6F
+1: https://gofile.io/d/zisYqX
+
+
+3: https://gofile.io/d/isZDh4
+
+1: https://gofile.io/d/XLkUFe
+
+https://drive.google.com/drive/folders/1yqjF5gvVn_I1QmiOOkmz9sYMODN_BNNC
+
+3: https://gofile.io/d/hSKCNG
+2: https://gofile.io/d/VLMYHb
+1: https://gofile.io/d/F7hoQ7
+
+
+remaining:
+
+3: https://gofile.io/d/ZCuCXG
+2: 
+1:
+
+
+
+def get_page_info_3():
+    data = ret_json("data/f_f_final_data_new_0.json")
+    data.update(ret_json("data/f_f_final_data_new_0.json"))
+    links = []
+    for t_id_k, t_id_v in data.items():
+        if t_id_v[13] == "tvSeries" or t_id_v[13] == "tvMiniSeries":
+            links.append(f"https://www.imdb.com/title/{t_id_k}/episodes")
+    print(len(links))
+    for i in range(0, len(links),  RANGE_OF_SOUP):
+        pages = getSoup_list(links[i : i+RANGE_OF_SOUP])
+        for page in pages:
+            try:
+                t_id_data = get_page_data_3(page)
+                data[ t_id_data[0] ] [11]= t_id_data[1]
+            except:
+                pass
+        if i % (10*RANGE_OF_SOUP) == 0:
+            print(i)
+            write_json(data, "data/final_data_0.json")
+    write_json(data, "data/final_data_0.json")
+
+
+
+import json
+from pprint import pprint
+
+if __name__ == "__main__":
+with open("data/f_f_final_data_new_2.json") as f:
+    data = json.load(f)
+
+for key, value in data.items():
+    if not len(value) == 14:
+        data.pop(key)
+
+with open("data/f_f_final_data_new_2.json", "w") as f:
+    json.dump(data, f)
+
+
+    t_id = soup.find("link", {"rel": "canonical"})["href"].split("/")[-2]
+    season_soup = soup.find("select", {"id": "bySeason"}).findAll("option")
+    seasons = []
+    for s_s in season_soup:
+        seasons.append(s_s['value'])
+    
+    year_soup = soup.find("select", {"id": "byYear"}).findAll("option")[1:]
+    years = []
+    for y_s in year_soup:
+        years.append(y_s['value'])
+
+    if len(seasons) > len(years):
+        years = years + [years[-1]] * (len(seasons) - len(years))
+    
+    ret = []
+    for i, season in enumerate(seasons):
+        ret.append([season, years[i]])
+    print(".")
+    return [t_id, ret]
+
+
+
+
+import json
+
+if __name__ == "__main__":
+    
+    with open("data/final_data_0_1.json") as f:
+        slave1 = json.load(f)
+    
+    with open("data/final_data_0.json") as f:
+        slave2 = json.load(f)
+
+    for key, value in slave1.items():
+        if key not in slave2:
+            slave2[key] = value
+        elif not value[11] == []:
+            slave2[key] = value
+    
+    with open("data/ready3.json", "w") as f:
+        json.dump(slave2, f)
