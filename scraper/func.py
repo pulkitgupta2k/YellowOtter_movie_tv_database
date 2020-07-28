@@ -142,7 +142,7 @@ def get_page_info_3():
         for page in pages:
             t_id_data = get_page_data_2(page)
             script_data[ t_id_data[0] ] [11]= t_id_data[1]
-        append_json("data/final_data.json", script_data)
+        write_json("data/final_data.json", script_data)
 
 def get_page_data_3(soup):
     t_id = soup.find("link", {"rel": "canonical"})["href"].split("/")[-2]
@@ -162,7 +162,6 @@ def get_page_data_3(soup):
     ret = []
     for i, season in enumerate(seasons):
         ret.append([season, years[i]])
-    print(ret)
     return [t_id, ret]
 
 
@@ -172,15 +171,20 @@ def get_page_info_4():
     for t_id_k, t_id_v in data.items():
         if t_id_v[11]:
             for s_no in t_id_v[11]:
-                links.append(f"https://www.imdb.com/title/{t_id_k}/episodes/season={s_no}")
+                links.append(f"https://www.imdb.com/title/{t_id_k}/episodes?season={s_no[0]}")
     for i in range(0, len(links),  RANGE_OF_SOUP):
         pages = getSoup_list(links[i : i+RANGE_OF_SOUP])
-        script_data = {}
         for page in pages:
-            t_id_data = get_page_data_4(page)
-            if t_id_data[1] not in script_data[ t_id_data[0] ][12]:
-                script_data[ t_id_data[0] ][12].append(t_id_data[1])
-        append_json("data/final_data.json", script_data)
+            try:
+                t_id_data = get_page_data_4(page)
+                if t_id_data[1] not in data[ t_id_data[0] ][12]:
+                    data[ t_id_data[0] ][12].append(t_id_data[1])
+            except:
+                pass
+        if i % (10*RANGE_OF_SOUP) == 0:
+            print(i)
+            write_json(data, "data/final_data_2.json")
+    write_json(data, "data/final_data_2.json")
 
 
 def get_page_data_4(soup):
@@ -191,7 +195,7 @@ def get_page_data_4(soup):
 
     s = soup.find("select", {"id": "bySeason"}).find("option", {"selected": "selected"}).text.strip()
     print(s)
-
+    series_id = soup.find("link", {"rel": "canonical"})["href"].split("/")[-2]
     for ep in eps:
         ep_id = ep.find("a", {"itemprop": "name"})['href'].split("/")[-2]
         ep_no = s+"_"+ep.find("meta", {"itemprop": "episodeNumber"})['content']
@@ -205,7 +209,7 @@ def get_page_data_4(soup):
             ep_image = ep.find("img")['src']
         except:
             ep_rating = ""
-        ret.append([ep_id, ep_no, ep_name, air_date, ep_rating, ep_image])
+        ret.append([ep_id, series_id, ep_no, ep_name, air_date, ep_rating, ep_image])
     pprint([t_id, ret])
     return [t_id, ret]
 
@@ -214,5 +218,5 @@ def driver():
     # get_imdb_info_1()
     # get_page_data_1(getSoup("https://www.imdb.com/title/tt0000002/"))
     # get_page_data_3(getSoup("https://www.imdb.com/title/tt0000001/fullcredits"))
-    # get_page_data_3(getSoup("https://www.imdb.com/title/tt4574334/episodes"))
+    # print(get_page_data_3(getSoup("https://www.imdb.com/title/tt2898910/episodes")))
     get_page_data_4(getSoup("https://www.imdb.com/title/tt4574334/episodes?season=4"))
