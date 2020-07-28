@@ -4,11 +4,13 @@ import styled from 'styled-components';
 
 //Components
 import HomeDefault from '../components/Home/index';
+import HomeAuthenticated from '../components/HomeAuthenticated/index';
 
 function Home() {
   return (
     <div>
-      <HomeDefault />
+      {/* <HomeDefault /> */}
+      <HomeAuthenticated />
     </div>
   );
 }
