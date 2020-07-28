@@ -4,6 +4,7 @@ export const NavContainer = styled.div`
 	display: flex;
 	background: black;
 	height: 10vh;
+	z-index:99;
 `
 
 export const NavSubContainer = styled.div`

@@ -37,7 +37,7 @@ function HomeAuthenticated() {
         <p className="subtitle">Movies that make you feel grateful</p>
         <Slider
           options={{
-            autoPlay: 2000,
+            autoPlay: 3000,
             pauseAutoPlayOnHover: true,
             wrapAround: true,
             fullscreen: true,
@@ -60,7 +60,7 @@ function HomeAuthenticated() {
         <p className="subtitle">Because you watched Dark</p>
         <Slider
           options={{
-            autoPlay: 1500,
+            autoPlay: 3500,
             pauseAutoPlayOnHover: true,
             wrapAround: true,
             fullscreen: true,
@@ -83,7 +83,7 @@ function HomeAuthenticated() {
         <p className="subtitle">Users with similar tastes watched this</p>
         <Slider
           options={{
-            autoPlay: 1500,
+            autoPlay: 4000,
             pauseAutoPlayOnHover: true,
             wrapAround: true,
             fullscreen: true,

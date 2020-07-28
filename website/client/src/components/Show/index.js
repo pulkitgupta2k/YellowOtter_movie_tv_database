@@ -90,7 +90,10 @@ const HeaderShow = styled.div`
     z-index:1;
     img{
         width:100%;
-        height:20%;
+        height:100%;
+        position:fixed;
+        // top:0;
+        // z-index:-1;
     }
     `;
     
@@ -99,7 +102,7 @@ const HeaderShow = styled.div`
       min-height: 100vh;
       width: 80vw;
       align-self: center;
-      margin-top: 4rem;
+      margin-top: 15rem;
       border-top-left-radius: 24px;
       border-top-right-radius: 24px;
       border: 10px solid var(--main-blue);
