@@ -2,20 +2,14 @@ import React from 'react';
 
 import styled from 'styled-components';
 
+//Components
+import HomeDefault from '../components/Home/index';
+
 function Home() {
   return (
-    <HomeContainer>
-        This is the Home page
-    </HomeContainer>
+    <div>
+      <HomeDefault />
+    </div>
   );
 }
 export default Home;
-
-const HomeContainer = styled.div`
-
-    display: flex;
-    flex-direction: column;
-    justify-content:center;
-    align-content: center;
-    text-align:center;
-`;
