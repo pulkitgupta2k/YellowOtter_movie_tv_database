@@ -56,7 +56,7 @@ function HomeDefault() {
         </div>
         <div className="right">
           <p className="pretitle"> ONE WATCHLIST </p>
-          <p className="title2">One search to rule them all</p>
+          <p className="title2">Combine all your watchlists</p>
           <p className="subtitle">
             Keep track of all the TV shows and movies you want to watch in one
             list across all your devices

@@ -3,13 +3,18 @@
 import React from "react"
 import { Switch } from "react-router-dom"
 import Route from "./Route"
-import Home from "../pages/Home"
+
+//importing the components
 import Nav from "../components/Nav"
+import Home from "../pages/Home"
+import Show from '../pages/Show'
+
 const Routes = () => {
 	return (
 		<>
 			<Nav />
 			<Switch>
+				<Route exact path='/show' component={Show} />
 				<Route exact path='/' component={Home} />
 			</Switch>
 		</>
