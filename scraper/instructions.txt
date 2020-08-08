@@ -120,3 +120,14 @@ if __name__ == "__main__":
     
     with open("data/ready3.json", "w") as f:
         json.dump(slave2, f)
+
+
+1: https://gofile.io/d/vjhKEQ
+2: https://gofile.io/d/457434
+3: https://gofile.io/d/QxxQML
+
+
+
+
+ready_4 3: https://gofile.io/d/zzVjAf
+ready_4 2: https://gofile.io/d/XNYtWU

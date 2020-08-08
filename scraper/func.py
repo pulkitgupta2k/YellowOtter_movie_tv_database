@@ -12,19 +12,23 @@ def clean_tsv():
     write_json(ids, "smol_data.json")
 
 def get_imdb_info_1():
-    data = ret_json("data/smol_data.json")
+    data = ret_json("data/rem_0.json")
     links = []
+    script_data = {}
     for row in data:
         links.append(f"https://www.imdb.com/title/{row[0]}/")
     for i in range(0, len(links), RANGE_OF_SOUP):
+        print(i)
         pages = getSoup_list(links[i : i+ RANGE_OF_SOUP])
-        script_data = {}
         for page in pages:
             try:
                 script_data.update(get_page_data_1(page))
             except:
                 pass
-        append_json("data/final_data.json", script_data)
+        if i % (10*RANGE_OF_SOUP) == 0:
+            print(i)
+            write_json(script_data, "data/remaining_data.json")
+    write_json(script_data, "data/remaining_data.json")
 
 def get_page_data_1(soup):
     data = soup.find("script", {"type": "application/ld+json"})
