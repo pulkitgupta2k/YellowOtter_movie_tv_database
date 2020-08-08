@@ -244,6 +244,7 @@ def get_page_data_4(soup):
 
 # main driver
 def driver():
+    # tsv file to be downloaded from imdb database
     clean_tsv()
     get_imdb_info_1()
     add_ep()
