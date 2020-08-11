@@ -131,3 +131,7 @@ dmypy.json
 
 # scraper
 data.tsv
+
+node_modules/
+*.lock
+package-lock.json

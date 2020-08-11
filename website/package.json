@@ -1,0 +1,7 @@
+{
+   "private": true,
+   "name": "upwork-ace",
+   "workspaces": ["client","server"],
+   "scripts": {},
+   "author":"Yellow Otter Solutions"
+}
