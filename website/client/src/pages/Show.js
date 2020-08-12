@@ -1,10 +1,9 @@
-import React from 'react';
+import React from "react";
 
-import styled from 'styled-components';
+import styled from "styled-components";
 
 //Components
-import ShowComponent from '../components/Show/index';
-
+import ShowComponent from "../components/Show/index";
 
 function Show() {
   return (

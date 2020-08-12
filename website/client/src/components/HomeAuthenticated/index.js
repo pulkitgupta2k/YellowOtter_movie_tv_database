@@ -1,23 +1,33 @@
-import React from 'react';
+import React from "react";
 
-import styled from 'styled-components';
-import { generateMedia } from 'styled-media-query';
+import styled from "styled-components";
+import { generateMedia } from "styled-media-query";
 import { HomeDefaultContainer, HeaderHome, SliderContainer } from "./styles";
 
-import image1 from '../../images/movie1.jfif';
-import image2 from '../../images/movie2.jfif';
-import image3 from '../../images/movie3.jfif';
-import image4 from '../../images/movie4.jfif';
-import image5 from '../../images/movie5.jfif';
-import image6 from '../../images/movie6.jfif';
-import image7 from '../../images/movie7.jfif';
-import image8 from '../../images/movie8.jfif';
-import image9 from '../../images/movie9.jfif';
-import headerImage from '../../images/home_recommendations.png';
-import logo from '../../images/logo.svg';
-import Slider from '../Slider';
+import image1 from "../../images/movie1.jfif";
+import image2 from "../../images/movie2.jfif";
+import image3 from "../../images/movie3.jfif";
+import image4 from "../../images/movie4.jfif";
+import image5 from "../../images/movie5.jfif";
+import image6 from "../../images/movie6.jfif";
+import image7 from "../../images/movie7.jfif";
+import image8 from "../../images/movie8.jfif";
+import image9 from "../../images/movie9.jfif";
+import headerImage from "../../images/home_recommendations.png";
+import logo from "../../images/logo.svg";
+import Slider from "../Slider";
 
-const images = [image1, image2, image3, image4, image5, image6, image7, image8, image9];
+const images = [
+  image1,
+  image2,
+  image3,
+  image4,
+  image5,
+  image6,
+  image7,
+  image8,
+  image9,
+];
 
 function HomeAuthenticated() {
   return (
@@ -47,10 +57,7 @@ function HomeAuthenticated() {
           }}
         >
           {images.map((image, index) => (
-            <div
-              className="slider-image-container"
-              key={index}
-            >
+            <div className="slider-image-container" key={index}>
               <img className="movie-card" src={image} alt="" />
             </div>
           ))}
@@ -70,10 +77,7 @@ function HomeAuthenticated() {
           }}
         >
           {images.map((image, index) => (
-            <div
-              className="slider-image-container"
-              key={index}
-            >
+            <div className="slider-image-container" key={index}>
               <img className="movie-card" src={image} alt="" />
             </div>
           ))}
@@ -93,10 +97,7 @@ function HomeAuthenticated() {
           }}
         >
           {images.map((image, index) => (
-            <div
-              className="slider-image-container"
-              key={index}
-            >
+            <div className="slider-image-container" key={index}>
               <img className="movie-card" src={image} alt="" />
             </div>
           ))}

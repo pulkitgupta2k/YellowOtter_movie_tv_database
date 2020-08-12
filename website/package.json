@@ -1,7 +1,26 @@
 {
-   "private": true,
-   "name": "upwork-ace",
-   "workspaces": ["client","server"],
-   "scripts": {},
-   "author":"Yellow Otter Solutions"
+  "private": true,
+  "name": "upwork-ace",
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {},
+  "author": "Yellow Otter Solutions",
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  },
+  "lint-staged": {
+    "**/*": [
+      "eslint --fix",
+      "prettier --write",
+    ]
+  },
+  "devDependencies": {
+    "husky": "^4.2.5",
+    "prettier": "2.0.5",
+    "pretty-quick": "^2.0.1"
+  }
 }

@@ -1,13 +1,13 @@
-import React from 'react';
+import React from "react";
 
-import styled from 'styled-components';
+import styled from "styled-components";
 import { HomeContainer, HomeDefaultContainer } from "./styles";
 
-import image1 from '../../images/tab-tv.png';
-import image2 from '../../images/tab-macbook.png';
-import image3 from '../../images/tab-tablet.png';
-import image4 from '../../images/image4.png';
-import logo from '../../images/logo.svg';
+import image1 from "../../images/tab-tv.png";
+import image2 from "../../images/tab-macbook.png";
+import image3 from "../../images/tab-tablet.png";
+import image4 from "../../images/image4.png";
+import logo from "../../images/logo.svg";
 
 function HomeDefault() {
   return (
@@ -70,11 +70,12 @@ function HomeDefault() {
             Get recommendations from all your favorite streaming services in one
             place
           </p>
-          <p className="subtitle">Get started by choosing which one you like better:</p>
+          <p className="subtitle">
+            Get started by choosing which one you like better:
+          </p>
         </div>
       </HomeContainer>
     </HomeDefaultContainer>
   );
 }
 export default HomeDefault;
-
