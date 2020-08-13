@@ -5,7 +5,7 @@ const Mutation = require("./Mutation");
 
 module.exports = {
   Query,
-  Mutation,
+  // Mutation,
   // Subscription,
-  ...Type,
+  // ...Type,
 };

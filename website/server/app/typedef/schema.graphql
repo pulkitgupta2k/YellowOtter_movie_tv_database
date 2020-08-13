@@ -1,53 +1,20 @@
 type Title {
   id: String!
-  name: String
+  name: String!
   discription: String
   Genre: [String]
-  Ratings: [Rating]
-  age_rating: [String]
+  imdb_ratings: String
+  rt_rating: String
+  age_rating: String
   cover_image: String
   air_date: String
   trailer_link: String
-  cast: [Cast]
-  season: [Season]
+  cast: [[String]]
+  seasons: [[String]]
+  episodes: [[[String]]]
   title_type: String
 }
 
-type Rating {
-  name: String
-  Value: Float
-}
-
-type Cast {
-  cast_name: String
-  real_name: String
-  pos: Position
-  pic: String
-}
-
-type Season {
-  number: String
-  Year: String
-  episodes: [Episode]
-}
-
-type Episode {
-  episode_id: String
-  series_id: String
-  eoiside_number: String
-  episode_name: String
-  episode_date: Int
-  episode_rating: String
-  episode_img: String
-  episode_lenght: String
-}
-
-enum Position {
-  Director
-  Writer
-  Cast
-}
-
 type Query {
-  findById(input: String): Title!
+  findById(id: String!): Title!
 }

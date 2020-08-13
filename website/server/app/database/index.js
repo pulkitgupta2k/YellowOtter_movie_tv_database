@@ -16,6 +16,7 @@ const connectToDB = () => {
       Promise.reject();
     });
 };
+
 module.exports = {
   connectToDB,
 };
