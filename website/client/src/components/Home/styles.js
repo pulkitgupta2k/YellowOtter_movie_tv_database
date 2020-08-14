@@ -1,10 +1,10 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const HomeDefaultContainer = styled.div`
   height: 90vh;
   // background:#010913;
   background: url(../../images/bg.jpg);
-//   background: var(--main-blue);
+  //   background: var(--main-blue);
 `;
 export const HomeContainer = styled.div`
   display: flex;
@@ -50,7 +50,7 @@ export const HomeContainer = styled.div`
   .pretitle {
     font-size: large;
     color: var(--main-yellow);
-    text-shadow: 4px 4px 0 8px rgba(244,192,1,0.6);
+    text-shadow: 4px 4px 0 8px rgba(244, 192, 1, 0.6);
   }
   .tv {
     height: 30rem;

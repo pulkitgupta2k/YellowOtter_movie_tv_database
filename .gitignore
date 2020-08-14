@@ -133,3 +133,7 @@ dmypy.json
 data.tsv
 creds.py
 data/
+
+node_modules/
+*.lock
+package-lock.json

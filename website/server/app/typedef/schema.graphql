@@ -1,0 +1,20 @@
+type Title {
+  id: String!
+  name: String!
+  discription: String
+  Genre: [String]
+  imdb_ratings: String
+  rt_rating: String
+  age_rating: String
+  cover_image: String
+  air_date: String
+  trailer_link: String
+  cast: [[String]]
+  seasons: [[String]]
+  episodes: [[[String]]]
+  title_type: String
+}
+
+type Query {
+  findById(id: String!): Title!
+}

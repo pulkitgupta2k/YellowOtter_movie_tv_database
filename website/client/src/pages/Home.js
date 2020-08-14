@@ -1,10 +1,10 @@
-import React from 'react';
+import React from "react";
 
-import styled from 'styled-components';
+import styled from "styled-components";
 
 //Components
-import HomeDefault from '../components/Home/index';
-import HomeAuthenticated from '../components/HomeAuthenticated/index';
+import HomeDefault from "../components/Home/index";
+import HomeAuthenticated from "../components/HomeAuthenticated/index";
 
 function Home() {
   return (

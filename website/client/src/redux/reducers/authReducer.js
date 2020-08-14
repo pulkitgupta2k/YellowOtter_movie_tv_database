@@ -6,7 +6,7 @@ import {
   LOGOUT_USER,
   SET_LOADING,
   RESET_STATE,
-} from '../actions';
+} from "../actions";
 
 const defaultState = {
   token: null,

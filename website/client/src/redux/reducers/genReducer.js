@@ -1,7 +1,7 @@
 /** @format */
 
 const defaultState = {
-  backendEndpoint: 'http://127.0.0.1:8000',
+  backendEndpoint: "http://127.0.0.1:8000",
 };
 
 export default (state = defaultState, action) => {

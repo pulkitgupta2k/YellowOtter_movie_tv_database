@@ -1,29 +1,28 @@
 /** @format */
 
 * {
-	background-color: black;
-	color: white;
-	
+  background-color: black;
+  color: white;
 }
 :root {
-	--main-yellow: #F4C001;
-	--main-red-hover: #e50914;
-	--main-dark: rgba(20,20,20);
-	--main-deep-dark: rgba(0,0,0);
-	--main-grey: rgba(153,153,153);
-	--main-blue:#010913;
-  }
+  --main-yellow: #f4c001;
+  --main-red-hover: #e50914;
+  --main-dark: rgba(20, 20, 20);
+  --main-deep-dark: rgba(0, 0, 0);
+  --main-grey: rgba(153, 153, 153);
+  --main-blue: #010913;
+}
 
 body {
-	margin: 0;
-	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-		"Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
-		"Helvetica Neue", sans-serif;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-	font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-		monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
 }

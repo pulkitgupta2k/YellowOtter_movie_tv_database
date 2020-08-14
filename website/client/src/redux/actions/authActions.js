@@ -6,13 +6,13 @@ import {
   LOGOUT_USER,
   SET_LOADING,
   RESET_STATE,
-} from '../actions';
-import store from '../store';
+} from "../actions";
+import store from "../store";
 
 // console.log(store.getState());
 const reduxState = store.getState();
 //Login User
-export const loginUser = values => async dispatch => {
+export const loginUser = (values) => async (dispatch) => {
   try {
     dispatch({
       type: SET_LOADING,
@@ -23,13 +23,13 @@ export const loginUser = values => async dispatch => {
       password: values.password,
     };
     var resp = await fetch(`${process.env.API_URL}/user/login`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(opts),
-      mode: 'cors',
+      mode: "cors",
     });
     var token = await resp.json();
     var found = false;
@@ -42,7 +42,7 @@ export const loginUser = values => async dispatch => {
       });
     }
     if (found === false) {
-      throw new Error('Sorry user not found');
+      throw new Error("Sorry user not found");
     }
   } catch (err) {
     console.log(err);
@@ -55,40 +55,40 @@ export const loginUser = values => async dispatch => {
 };
 
 //Logout User
-export const logoutUser = token => {
-  return function(dispatch) {
+export const logoutUser = (token) => {
+  return function (dispatch) {
     //* Connect to backend here for logout.
     var opts = {
       token: token,
     };
-    console.log('Logout', token);
+    console.log("Logout", token);
     fetch(`${process.env.API_URL}/user/logout`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(opts),
-      mode: 'cors',
+      mode: "cors",
     })
-      .then(res => {
+      .then((res) => {
         if (res.status === 200) {
           return res.json();
         } else {
-          throw new Error('Cant Logout');
+          throw new Error("Cant Logout");
         }
       })
-      .then(json => {
+      .then((json) => {
         dispatch({
           type: LOGOUT_USER,
         });
       })
-      .catch(err => alert(err));
+      .catch((err) => alert(err));
   };
 };
 
 //Login Fail
-export const loginFail = error => {
+export const loginFail = (error) => {
   return {
     type: LOGIN_FAIL,
     payload: error,
