@@ -131,3 +131,5 @@ dmypy.json
 
 # scraper
 data.tsv
+creds.py
+data/
