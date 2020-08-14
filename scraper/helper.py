@@ -15,7 +15,7 @@ def write_json(data, file):
         json.dump(data, f)
 
 def ret_json(file):
-    with open(file) as f:
+    with open(file, 'r', encoding='utf-8') as f:
         data = json.load(f)
     return data
 
