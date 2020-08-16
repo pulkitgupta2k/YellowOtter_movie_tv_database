@@ -18,7 +18,7 @@ def justwatch_movies(n):
             except Exception as e:
                 print(e)
                 pass
-        if i % (10*RANGE_OF_SOUP) == 0:
+        if i-1 % (10*RANGE_OF_SOUP) == 0:
             print(i)
             write_json(data, "data/justwatch_movies.json")
     write_json(data, "data/justwatch_movies.json")
@@ -37,7 +37,7 @@ def justwatch_shows(n):
                 data.update(movie)
             except:
                 pass
-        if i % (10*RANGE_OF_SOUP) == 0:
+        if i-1 % (10*RANGE_OF_SOUP) == 0:
             print(i)
             write_json(data, "data/justwatch_shows.json")
     write_json(data, "data/justwatch_shows.json")
