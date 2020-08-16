@@ -33,7 +33,7 @@ def justwatch_shows(n):
         pages = getSoup_list(links)
         for page in pages:
             try:
-                movie = helper_shows(json.loads(str(page)))
+                movie = helper_titles(json.loads(str(page)))
                 data.update(movie)
             except:
                 pass
