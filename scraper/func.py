@@ -135,11 +135,15 @@ def get_page_data_2(soup):
             trs = table.findAll("tr")
             for tr in trs[:5]:
                 try:
+                    try:
+                        cast_id = tr.find("td", {"class": "name"}).find("a")["href"].split("/")[2]
+                    except:
+                        cast_id = ""
                     cast_name = ""
                     real_name = tr.find("td", {"class": "name"}).text.strip()
                     cast_type = "dir"
                     pic = ""
-                    cast.append([cast_name, real_name, cast_type, pic])
+                    cast.append([cast_id, cast_name, real_name, cast_type, pic])
                 except:
                     pass
         elif "writer" in heading_text or "writing" in heading_text:
@@ -147,11 +151,15 @@ def get_page_data_2(soup):
             trs = table.findAll("tr")
             for tr in trs[:5]:
                 try:
+                    try:
+                        cast_id = tr.find("td", {"class": "name"}).find("a")["href"].split("/")[2]
+                    except:
+                        cast_id = ""
                     cast_name = ""
                     real_name = tr.find("td", {"class": "name"}).text.strip()
                     cast_type = "writer"
                     pic = ""
-                    cast.append([cast_name, real_name, cast_type, pic])
+                    cast.append([cast_id, cast_name, real_name, cast_type, pic])
                 except:
                     pass
         elif "cast" in heading_text:
@@ -160,12 +168,19 @@ def get_page_data_2(soup):
             for tr in trs[:200:2]:
                 try:
                     td = tr.findAll("td")
-                    pic = td[0].find("img")['src']
+                    try:
+                        cast_id = td[0].find("a")['href'].split("/")[2]
+                    except:
+                        cast_id = ""
+                    try:
+                        pic = td[0].find("img")['loadlate']
+                    except:
+                        pic = ""
                     cast_name = td[1].text.strip()
                     real_name = td[3].text.strip().replace(
                         "&nbsp", "").split()[0]
                     cast_type = "cast"
-                    cast.append([cast_name, real_name, cast_type, pic])
+                    cast.append([cast_id, cast_name, real_name, cast_type, pic])
                 except:
                     pass
     return [t_id, cast]
@@ -272,9 +287,9 @@ def get_page_data_4(soup):
 # main driver
 def driver():
     # tsv file to be downloaded from imdb database
-    clean_tsv()
-    get_imdb_info_1()
-    add_ep()
+    # clean_tsv()
+    # get_imdb_info_1()
+    # add_ep()
     get_page_info_2()
-    get_page_info_3()
-    get_page_info_4()
+    # get_page_info_3()
+    # get_page_info_4()
