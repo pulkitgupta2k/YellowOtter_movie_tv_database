@@ -9,10 +9,22 @@ type Title {
   cover_image: String
   air_date: String
   trailer_link: String
-  cast: [[String]]
+  cast: [Cast!]!
   seasons: [[String]]
   episodes: [[[String]]]
   title_type: String
+}
+
+type Cast {
+  id: String!
+  cast_id: Cast_Id!
+  played_as: String!
+}
+type Cast_Id {
+  id: String!
+  name: String!
+  pic: String!
+  titles: [String!]!
 }
 
 type Query {
