@@ -68,3 +68,18 @@ def getSoup(link):
     html = req.content
     soup = BeautifulSoup(html, "html.parser")
     return soup
+
+def down_tsv(url, path):
+    urls = [url]
+    MAX_CONNECTIONS = 100
+    requests = []
+    for x in range(0,len(urls),MAX_CONNECTIONS):
+        rs = (grequests.get(u, stream=False) for u in urls[x:x+MAX_CONNECTIONS])
+        time.sleep(0.2)
+        requests.extend(grequests.map(rs))
+    r = requests[0]
+    print(r)
+    open(f"{path}.tsv.gz", "wb").write(r.content)
+    with gzip.open(f"{path}.tsv.gz", 'rb') as f_in:
+        with open(f"{path}.tsv", 'wb') as f_out:
+            shutil.copyfileobj(f_in, f_out)

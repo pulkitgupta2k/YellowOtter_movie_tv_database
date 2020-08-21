@@ -100,9 +100,13 @@ def get_links(file, output_file):
     except:
         links = []
 
-    for row in data:
-        t_id = row['id']
-        links.append(f"https://www.imdb.com/title/{t_id}/fullcredits")
+    for key, value in data.items():
+        links.append(f"https://www.imdb.com/title/{key}/fullcredits")
+
+
+    # for row in data:
+    #     t_id = row['id']
+    #     links.append(f"https://www.imdb.com/title/{t_id}/fullcredits")
     write_json(links, output_file)
 
 
@@ -136,7 +140,7 @@ def get_cast(links_file, output_file, cast_file):
 
 
 def driver():
-    # get_links("data/test.json", "data/links.json")
+    get_links("data/ready_1.json", "data/links.json")
     get_cast("data/links.json", "data/cast_main.json", "data/cast_sep.json")
 
 
