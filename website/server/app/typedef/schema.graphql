@@ -1,7 +1,7 @@
 type Title {
   id: String!
   name: String!
-  discription: String
+  description: String
   Genre: [String]
   imdb_ratings: String
   rt_rating: String
