@@ -1,8 +1,19 @@
 const mongoose = require("mongoose");
-const Title = require("../model/Title");
+const { Master, Cast, Episode } = require("../model/Title");
 
 const findById = (id) =>
-  Title.findOne({ id })
+  Master.findById(id)
+    .populate({
+      path: "cast",
+      populate: {
+        path: "cast_id",
+        model: Cast,
+      },
+    })
+    .populate({
+      path: "episode",
+      populate: "episode",
+    })
     .exec()
     .then((res) => res.toJSON())
     .catch((err) => {
