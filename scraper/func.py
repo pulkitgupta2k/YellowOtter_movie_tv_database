@@ -12,7 +12,10 @@ def add_type(ids, output_file):
         try:
             ready_1[tid[0]]["title_type"] = tid[1]
         except:
-            pass
+            try:
+                 ready_1[tid[0]]["title_type"] = ""
+            except:
+                pass
     write_json(ready_1, output_file)
 
 # First scrape getting general data
@@ -105,7 +108,7 @@ def get_cast(ids, output_file, cast_file):
         for page in pages:
             try:
                 t_id_data = cast_helper(page, data, cast_data)
-                data.update(t_id_data[1])
+                data[t_id_data[0]]["cast"] = (t_id_data[1])
                 cast_data = t_id_data[2]
             except:
                 pass
@@ -118,7 +121,8 @@ def get_cast(ids, output_file, cast_file):
 
 # Second Scrape Helper
 
-def cast_helper(soup, data, cast_data):
+def cast_helper(soup, cast_data):
+    data = []
     fullcredits_content = soup.find("div", {"id": "fullcredits_content"})
     headings_soup = fullcredits_content.findAll("h4")
     table_soup = fullcredits_content.findAll("table")
@@ -140,10 +144,7 @@ def cast_helper(soup, data, cast_data):
                     real_name = tr.find("td", {"class": "name"}).text.strip()
                     cast_type = "dir"
                     pic = ""
-                    try:
-                        data[t_id].append({"cast_id": cast_id, "played_as": cast_name, "type": cast_type})
-                    except:
-                        data[t_id] = [{"cast_id": cast_id, "played_as": cast_name, "type": cast_type}]
+                    data.append({"cast_id": cast_id, "played_as": cast_name, "type": cast_type})
                     if cast_id in cast_data.keys():
                         if t_id not in cast_data[cast_id]["titles"]:
                             cast_data[cast_id]["titles"].append(t_id)
@@ -165,10 +166,7 @@ def cast_helper(soup, data, cast_data):
                     real_name = tr.find("td", {"class": "name"}).text.strip()
                     cast_type = "writer"
                     pic = ""
-                    try:
-                        data[t_id].append({"cast_id": cast_id, "played_as": cast_name, "type": cast_type})
-                    except:
-                        data[t_id] = [{"cast_id": cast_id, "played_as": cast_name, "type": cast_type}]
+                    data[t_id].append({"cast_id": cast_id, "played_as": cast_name, "type": cast_type})
                     if cast_id in cast_data.keys():
                         if t_id not in cast_data[cast_id]["titles"]:
                             cast_data[cast_id]["titles"].append(t_id)
@@ -194,10 +192,7 @@ def cast_helper(soup, data, cast_data):
                     cast_name = td[3].text.strip().replace(
                         "&nbsp", "").split()[0]
                     cast_type = "cast"
-                    try:
-                        data[t_id].append({"cast_id": cast_id, "played_as": cast_name, "type": cast_type})
-                    except:
-                        data[t_id] = [{"cast_id": cast_id, "played_as": cast_name, "type": cast_type}]
+                    data[t_id].append({"cast_id": cast_id, "played_as": cast_name, "type": cast_type})
                     if cast_id in cast_data.keys():
                         if t_id not in cast_data[cast_id]["titles"]:
                             cast_data[cast_id]["titles"].append(t_id)
@@ -213,8 +208,11 @@ def get_season(file):
     data = ret_json(file)
     links = []
     for t_id_k, t_id_v in data.items():
-        if t_id_v[13] == "tvSeries" or t_id_v[13] == "tvMiniSeries":
-            links.append(f"https://www.imdb.com/title/{t_id_k}/episodes")
+        try:
+            if t_id_v["title_type"] == "tvSeries" or t_id_v["title_type"] == "tvMiniSeries":
+                links.append(f"https://www.imdb.com/title/{t_id_k}/episodes")
+        except:
+            data.pop(t_id_k, None)
     for i in range(0, len(links),  RANGE_OF_SOUP):
         pages = getSoup_list(links[i: i+RANGE_OF_SOUP])
         for page in pages:
@@ -304,9 +302,9 @@ def season_helper(soup):
 
 # main driver
 def title_driver(ids, masters, cast):
-    # get_general(ids, masters)
+    get_general(ids, masters)
     print("General Done")
-    # add_type(ids, masters)
+    add_type(ids, masters)
     print("Type Done")
     get_cast(ids, masters, cast)
     print("Cast Done")
