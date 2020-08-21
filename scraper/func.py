@@ -107,10 +107,12 @@ def get_cast(ids, output_file, cast_file):
         pages = getSoup_list(links[i: i+RANGE_OF_SOUP])
         for page in pages:
             try:
-                t_id_data = cast_helper(page, data, cast_data)
+                t_id_data = cast_helper(page, cast_data)
                 data[t_id_data[0]]["cast"] = (t_id_data[1])
                 cast_data = t_id_data[2]
-            except:
+            except Exception as e:
+                # print(e)
+                # x = input(0)
                 pass
         if i % (10*RANGE_OF_SOUP) == 0:
             write_json(data, output_file)
@@ -166,7 +168,7 @@ def cast_helper(soup, cast_data):
                     real_name = tr.find("td", {"class": "name"}).text.strip()
                     cast_type = "writer"
                     pic = ""
-                    data[t_id].append({"cast_id": cast_id, "played_as": cast_name, "type": cast_type})
+                    data.append({"cast_id": cast_id, "played_as": cast_name, "type": cast_type})
                     if cast_id in cast_data.keys():
                         if t_id not in cast_data[cast_id]["titles"]:
                             cast_data[cast_id]["titles"].append(t_id)
@@ -192,7 +194,7 @@ def cast_helper(soup, cast_data):
                     cast_name = td[3].text.strip().replace(
                         "&nbsp", "").split()[0]
                     cast_type = "cast"
-                    data[t_id].append({"cast_id": cast_id, "played_as": cast_name, "type": cast_type})
+                    data.append({"cast_id": cast_id, "played_as": cast_name, "type": cast_type})
                     if cast_id in cast_data.keys():
                         if t_id not in cast_data[cast_id]["titles"]:
                             cast_data[cast_id]["titles"].append(t_id)
