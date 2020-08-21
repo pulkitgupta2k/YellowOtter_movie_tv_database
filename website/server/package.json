@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon App.js",
+    "start": "node App.js"
   },
   "author": "",
   "license": "ISC",
@@ -15,5 +17,7 @@
     "graphql-playground-middleware-express": "^1.7.18",
     "mongoose": "^5.9.28"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
 }

@@ -15,6 +15,8 @@ const typeDefs = readFileSync(
   "utf-8"
 );
 
+const PORT = process.env.PORT || 3000;
+
 var app = express();
 var httpServer = createServer(app);
 
@@ -31,9 +33,9 @@ db.connectToDB()
     app.get("/playground", graphqlPlayground({ endpoint: "/graphql" }));
 
     httpServer.timeout = 5000;
-    httpServer.listen({ port: process.env.PORT }, () => {
+    httpServer.listen({ port: PORT }, () => {
       console.log(
-        `🚀 Server Running on Port:${process.env.PORT} in ${process.env.NODE_ENV}`
+        `🚀 Server Running on Port:${PORT} in ${process.env.NODE_ENV}`
       );
     });
   })
