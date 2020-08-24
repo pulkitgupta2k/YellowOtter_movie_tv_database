@@ -1,7 +1,5 @@
 import React from "react";
-
 import styled from "styled-components";
-import { generateMedia } from "styled-media-query";
 
 import image1 from "../../images/show1.jfif";
 import image2 from "../../images/show1_1.jfif";
@@ -11,14 +9,15 @@ export default function ShowComponent() {
   return (
     <ShowContainer>
       <HeaderShow>
-        <img src={image1} />
+        <img src={image1} alt="lala" />
       </HeaderShow>
       <MainShow>
         <div className="main-img">
-          <img src={image2} />
+          <img src={image2} alt="lala" />
           <p className="side-info">
             RATING:{" "}
             <img
+              alt="lala"
               src={logo}
               style={{
                 height: "48px",

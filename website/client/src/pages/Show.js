@@ -1,14 +1,10 @@
 import React from "react";
-
-import styled from "styled-components";
-
 //Components
-import ShowComponent from "../components/Show/index";
+import ShowComponent from "../components/Show";
 
 function Show() {
   return (
     <div>
-      {/* <HomeDefault /> */}
       <ShowComponent />
     </div>
   );

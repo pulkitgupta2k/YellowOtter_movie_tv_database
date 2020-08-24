@@ -5,6 +5,8 @@ export const NavContainer = styled.div`
   background: black;
   height: 10vh;
   z-index: 99;
+  position: fixed;
+  width: 100%;
 `;
 
 export const NavSubContainer = styled.div`
