@@ -83,7 +83,7 @@ def general_helper(soup):
     ret_data = {}
     ret_data[t_id] = {"_id":t_id, "name":name, "description": desc,"genre": genre, "imdb_ratings": IMDB_rating, "rt_rating": Rotten_rating,
                       "age_rating": age_rating, "cover_image":cover_image, "air_date": air_date, "trailer_link_1": trailer_link, "cast": cast, 
-                      "season": tv_season, "episode": epidode}
+                      "seasons": tv_season, "episode": epidode}
 
     return ret_data
 
@@ -208,13 +208,16 @@ def cast_helper(soup, cast_data):
 # Third Scrape getting seasons
 def get_season(file):
     data = ret_json(file)
+    rem_ids = []
     links = []
     for t_id_k, t_id_v in data.items():
         try:
             if t_id_v["title_type"] == "tvSeries" or t_id_v["title_type"] == "tvMiniSeries":
                 links.append(f"https://www.imdb.com/title/{t_id_k}/episodes")
         except:
-            data.pop(t_id_k, None)
+            rem_ids.append(t_id_k)
+    for _id in rem_ids:
+        data.pop(_id, None)
     for i in range(0, len(links),  RANGE_OF_SOUP):
         pages = getSoup_list(links[i: i+RANGE_OF_SOUP])
         for page in pages:
@@ -248,67 +251,126 @@ def season_helper(soup):
         ret.append([season, years[i]])
     return [t_id, ret]
 
+
+
+
 # fourth scrape getting episodes
-# def get_episode(file):
-#     data = ret_json(file)
-#     links = []
-#     for t_id_k, t_id_v in data.items():
-#         if t_id_v[11]:
-#             for s_no in t_id_v[11]:
-#                 links.append(
-#                     f"https://www.imdb.com/title/{t_id_k}/episodes?season={s_no[0]}")
-#     for i in range(0, len(links),  RANGE_OF_SOUP):
-#         pages = getSoup_list(links[i: i+RANGE_OF_SOUP])
-#         for page in pages:
-#             try:
-#                 t_id_data = episode_helper(page)
-#                 if t_id_data[1] not in data[t_id_data[0]][12]:
-#                     data[t_id_data[0]][12].append(t_id_data[1])
-#             except:
-#                 pass
-#         if i % (10*RANGE_OF_SOUP) == 0:
-#             print(i)
-#             write_json(data, file)
-#     write_json(data, file)
+def get_episode(file):
+    data = ret_json(file)
+    links = []
+    for t_id_k, t_id_v in data.items():
+        if t_id_v[11]:
+            for s_no in t_id_v[11]:
+                links.append(
+                    f"https://www.imdb.com/title/{t_id_k}/episodes?season={s_no[0]}")
+    for i in range(0, len(links),  RANGE_OF_SOUP):
+        pages = getSoup_list(links[i: i+RANGE_OF_SOUP])
+        for page in pages:
+            try:
+                t_id_data = episode_helper(page)
+                if t_id_data[1] not in data[t_id_data[0]][12]:
+                    data[t_id_data[0]][12].append(t_id_data[1])
+            except:
+                pass
+        if i % (10*RANGE_OF_SOUP) == 0:
+            print(i)
+            write_json(data, file)
+    write_json(data, file)
 
 # fourth scrape helper
 
 
-# def episode_helper(soup):
-#     t_id = soup.find("link", {"rel": "canonical"})["href"].split("/")[-2]
-#     eps = soup.find("div", {"class": "list detail eplist"})
-#     eps = eps.findAll("div", {"class": "list_item"})
-#     ret = []
 
-#     s = soup.find("select", {"id": "bySeason"}).find(
-#         "option", {"selected": "selected"}).text.strip()
-#     series_id = soup.find("link", {"rel": "canonical"})["href"].split("/")[-2]
-#     for ep in eps:
-#         ep_id = ep.find("a", {"itemprop": "name"})['href'].split("/")[-2]
-#         ep_no = s+"_"+ep.find("meta", {"itemprop": "episodeNumber"})['content']
-#         ep_name = ep.find("strong").text.strip()
-#         air_date = ep.find("div", {"class": "airdate"}).text.strip()
-#         try:
-#             ep_rating = ep.find(
-#                 "span", {"class": "ipl-rating-star__rating"}).text
-#         except:
-#             ep_rating = ""
-#         try:
-#             ep_image = ep.find("img")['src']
-#         except:
-#             ep_rating = ""
-#         ret.append([ep_id, series_id, ep_no, ep_name,
-#                     air_date, ep_rating, ep_image])
-#     return [t_id, ret]
 
+# fourth scrape getting episodes
+def get_episode(masters, episode):
+    data = ret_json(masters)
+    episode_data = {}
+    links = []
+    for t_id_k, t_id_v in data.items():
+        for season in t_id_v["season"]:
+            links.append(f"https://www.imdb.com/title/{t_id_k}/episodes?season={season}")
+    print(len(links))
+    for i in range(0, len(links),  RANGE_OF_SOUP):
+        pages = getSoup_list(links[i: i+RANGE_OF_SOUP])
+        for page in pages:
+            try:
+                t_id_data = episode_helper(page)
+                episode_data.update(t_id_data[1])
+            except:
+                pass
+        if i % (10*RANGE_OF_SOUP) == 0:
+            print(i)
+            write_json(episode_data, episode)
+    write_json(episode_data, episode)
+
+
+def episode_helper(soup):
+    t_id = soup.find("link", {"rel": "canonical"})["href"].split("/")[-2]
+    eps = soup.find("div", {"class": "list detail eplist"})
+    eps = eps.findAll("div", {"class": "list_item"})
+    ret = {}
+
+    s = soup.find("select", {"id": "bySeason"}).find(
+        "option", {"selected": "selected"}).text.strip()
+    series_id = soup.find("link", {"rel": "canonical"})["href"].split("/")[-2]
+    for ep in eps:
+        ep_id = ep.find("a", {"itemprop": "name"})['href'].split("/")[-2]
+        ep_no = ep.find("meta", {"itemprop": "episodeNumber"})['content']
+        ep_name = ep.find("strong").text.strip()
+        air_date = ep.find("div", {"class": "airdate"}).text.strip()
+        try:
+            ep_rating = ep.find(
+                "span", {"class": "ipl-rating-star__rating"}).text
+        except:
+            ep_rating = ""
+        try:
+            ep_image = ep.find("img")['src']
+        except:
+            ep_rating = ""
+        ret = {ep_id: {"series_id":series_id, "season": s, "ep_no":ep_no, "ep_name": ep_name,
+                    "air_date":air_date, "rating": ep_rating, "image":ep_image}}
+    return [t_id, ret]
+
+def ep_dic_conv(ids, masters):
+    id_data = ret_json(ids)
+    episode_data = {}
+    for row in id_data:
+        # _id = row[0]
+        series_id = row[1]
+
+        if  row[2] == '\\N':
+            season = -1
+        else:
+            season = int(row[2])
+        
+        # if  row[3] == '\\N':
+        #     ep_no = -1
+        # else:
+        #     ep_no = int(row[3])
+
+        if series_id in episode_data.keys():
+            if season not in  episode_data[series_id]["season"]:
+                episode_data[series_id]["season"].append(season)
+        else:
+            episode_data[series_id] = {"season": [season]}
+    write_json(episode_data, masters)
+        
+        
 
 # main driver
 def title_driver(ids, masters, cast):
-    get_general(ids, masters)
+    # get_general(ids, masters)
     print("General Done")
-    add_type(ids, masters)
+    # add_type(ids, masters)
     print("Type Done")
-    get_cast(ids, masters, cast)
+    # get_cast(ids, masters, cast)
     print("Cast Done")
-    get_season(masters)
+    # get_season(masters)
     print("Season Done")
+
+def episode_driver(ids, masters, episode):
+    # ep_dic_conv(ids, masters)
+    print("Conversion to dic complete")
+    get_episode(masters, episode)
+    print("Episode Done")
