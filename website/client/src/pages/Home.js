@@ -1,6 +1,10 @@
 import React from "react";
-
+import HomeWrapper from "../components/Home";
 function Home() {
-  return <div>HOMEE</div>;
+  return (
+    <div style={{ marginTop: "10vh" }}>
+      <HomeWrapper />
+    </div>
+  );
 }
 export default Home;
