@@ -8,7 +8,7 @@
   "scripts": {
     "server-dev": "yarn workspace server run dev",
     "server-start": "yarn workspace server run start",
-    "client-dev": "yarn wrokspace client run start"
+    "client-dev": "yarn workspace client run start"
   },
   "author": "Yellow Otter Solutions",
   "husky": {
